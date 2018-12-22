@@ -67,6 +67,8 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 struct StrPlcData PlcData;
+bool isAddRdcord = false;
+
 HANDLE GEvent;
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
@@ -165,6 +167,8 @@ CBlastTestDlg::CBlastTestDlg(CWnd* pParent /*=NULL*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
+long count = 0;
+
 void CBlastTestDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -188,7 +192,27 @@ void CBlastTestDlg::DoDataExchange(CDataExchange* pDX)
 	{
 		DDX_Text(pDX, IDC_EDIT11, m_HunchKg);
 	}
-	else  DDX_Text(pDX, IDC_EDIT11, PlcData.m_HdyPress.m_PressValue);
+	else
+	{
+       //zhj modify v1.15
+		float aa = 0, bb = 1;
+		
+		if (m_HunReleaseBtn)
+		{
+			count++;
+			if (count > 2000) count = 2000;
+			bb = 1 - count / 2400;
+			aa = PlcData.m_HdyPress.m_PressSetValue + (PlcData.m_HdyPress.m_PressValue - PlcData.m_HdyPress.m_PressSetValue)*bb;
+		}
+		else
+		{
+			aa = PlcData.m_HdyPress.m_PressValue;
+			count = 0;
+		}
+		DDX_Text(pDX, IDC_EDIT11, aa);
+
+
+	}
 	DDX_Text(pDX, IDC_EDIT12, m_TestPerName);
 	DDX_Text(pDX, IDC_EDIT13, m_TestTemp);
 	DDX_Text(pDX, IDC_EDIT14, m_TestHumi);
@@ -587,7 +611,7 @@ DWORD WINAPI ReadPlcDataPro(LPVOID lpParameter )
 			//PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf);//20160809改成直接显示
 			if (EquipmentType == TESTTYPE_ZHUJI)	PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf) / 10.f;//zhj modify V1.01
 			//zhj modify V1.04  V1.08
-			else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf);
+		    else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf);
 			//else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf)/10.f;
 
 			if(!GetOutBuffCount())//读取烟雾传感器的实时值
@@ -966,6 +990,11 @@ void CBlastTestDlg::SetParperBtnBit(char sw)
 //装药与完成按钮
 void CBlastTestDlg::OnBtnPraper() 
 {
+	if (isAddRdcord)
+	{
+		AddRecord(true);
+		return;
+	}
 	// TODO: Add your control notification handler code here
 	unsigned char SBuf[10];
 	memset(SBuf,0x00,10);
@@ -1001,13 +1030,9 @@ void CBlastTestDlg::OnBtnPraper()
 	if(!WriteByte(CMD_SLAVE_ADDR,CMD_PLACE_EXPLOSIVE,m_PlaceExpPrepar))
 	{
 		m_PlaceExpPrepar=!m_PlaceExpPrepar;//将指示变回来
-
-	
-
 		MessageBox(_T("与PLC通信失败！"));
 		return ;
 	}
-
 	//v1.09add
 	if (!m_PlaceExpPrepar)
 	{
@@ -1016,8 +1041,6 @@ void CBlastTestDlg::OnBtnPraper()
 			MessageBox(_T("与PLC通信失败！"));
 		}
 	}
-
-
 	SetParperBtnBit(m_PlaceExpPrepar);//改变图片显示
 	SetBlastIndexBit(0);//改变爆炸状态指示灯的显示为灰色
 			
@@ -1258,7 +1281,7 @@ void CBlastTestDlg::OnTestSpInBtn()
 		char SBuf[10];
 		CString str;
 		int Hight = (int)(m_HunchHight * 10);
-//zhj delete V1.11 int Hight=(int)(m_HunchHight*m_HunHightRata*10);//20150607添加高度系数
+		//zhj delete V1.11 int Hight=(int)(m_HunchHight*m_HunHightRata*10);//20150607添加高度系数
 		//zhj delete V1.10 int Hight = (int)(m_HunchHight*m_HunHightRata);//20150809取消乘10
 		str.Format("%2X",Hight);//从机地址转换为16进制字符串
 		str.Replace(' ','0');
@@ -1290,7 +1313,7 @@ void CBlastTestDlg::OnTestSpInBtn()
 		//WriteInt(CMD_SLAVE_ADDR,CMD_COR_TIMER_DELAY,(int)m_CorTimerDelay);
 		//写入压力设定,转换到DA值
 		//WriteInt(CMD_SLAVE_ADDR, CMD_ADDR_PRESSSET, (int)((PlcData.m_HdyPress.m_PressSetValue + PlcData.m_HdyPress.m_PressSetOffset)*MAX_PRESSDAVALUE / 8.0));
-		WriteInt(CMD_SLAVE_ADDR, CMD_ADDR_PRESSSET, (int)((PlcData.m_HdyPress.m_PressSetValue + PlcData.m_HdyPress.m_PressSetOffset)*100));//20160812需改
+	    WriteInt(CMD_SLAVE_ADDR, CMD_ADDR_PRESSSET, (int)((PlcData.m_HdyPress.m_PressSetValue + PlcData.m_HdyPress.m_PressSetOffset)*100));//20160812需改
 		//WriteFloat(CMD_SLAVE_ADDR, CMD_ADDR_PRESSSET, PlcData.m_HdyPress.m_PressSetValue);//20160808需改
 		DataSet.Open(_T("select * from SampleTable where 试样编号='")+m_TestSel+_T("'"));//将数据写入样品数据库
 		if(DataSet.GetRecordCount()<=0)
@@ -1302,6 +1325,7 @@ void CBlastTestDlg::OnTestSpInBtn()
 			DataSet.SetFieldValue(_T("落锤质量"),m_HunchKg);
 			DataSet.SetFieldValue(_T("落高"),m_HunchHight);
 			DataSet.SetFieldValue(_T("药量"),m_TestSpKg);
+			if (EquipmentType == TESTTYPE_MOCHA) DataSet.SetFieldValue(_T("加压压力"), PlcData.m_HdyPress.m_PressSetValue);
 			DataSet.Save();
 
 		}
@@ -1685,11 +1709,17 @@ BOOL CBlastTestDlg::PreTranslateMessage(MSG* pMsg)
 			}
 		}
 	}*/
-	/*//屏蔽ESC关闭窗口消息
-	if(((pMsg->message==WM_KEYDOWN) | (pMsg->message==WM_KEYUP)) & (pMsg->wParam==VK_ESCAPE))
+	
+	if (((pMsg->message == WM_KEYDOWN) | (pMsg->message == WM_KEYUP)) & (pMsg->wParam == VK_HOME))
 	{
-		return TRUE;
-	}*/
+		isAddRdcord = true;
+		m_BtnRealse.LoadBitmaps(IDB_REALSE2);
+		m_BtnRealse.SizeToContent();
+		m_BtnRealse.RedrawWindow();
+		m_BtnPrepar.LoadBitmaps(IDB_REALSE1);
+		m_BtnPrepar.SizeToContent();
+		m_BtnPrepar.RedrawWindow();
+	}
 
 	
 
@@ -2136,9 +2166,11 @@ DWORD WINAPI PlcFiStatusPro(LPVOID lpParameter )
 		//FATEK_ReadMultiReg(CMD_SLAVE_ADDR,CMD_FINISH_STATUS_INT,1,SBuf);
 		//D320=FATEK_GetIntData(0,(char *)SBuf);
 		D320 = 0;
-		FATEK_ReadMultiReg(CMD_SLAVE_ADDR, CMD_ADDR_PRESS, 0x01, SBuf);//读取压力值
-		PlcData.m_HdyPress.m_PressValue = (float)FATEK_GetIntData(0, (char *)SBuf)/100.0; //; (10.0f);
-		PlcData.m_HdyPress.m_PressValue = int(PlcData.m_HdyPress.m_PressValue * 100) / 100.0;//取两位小数
+
+		//zhj modify V1.15 
+		//FATEK_ReadMultiReg(CMD_SLAVE_ADDR, CMD_ADDR_PRESS, 0x01, SBuf);//读取压力值
+		//PlcData.m_HdyPress.m_PressValue = (float)FATEK_GetIntData(0, (char *)SBuf)/100.0; //; (10.0f);
+		//PlcData.m_HdyPress.m_PressValue = int(PlcData.m_HdyPress.m_PressValue * 100) / 100.0;//取两位小数
 		
 		SetEvent(GEvent);//变为有信号状态，让线程可以发生数据
 		if((RetValue!=-2) & (M30 | D320))//将第一个字节的字符转换为布尔型,
@@ -2187,7 +2219,7 @@ LRESULT  CBlastTestDlg::OnHunFinish(WPARAM wParam, LPARAM lParam)
 	{ 
 	if (abs(PlcData.m_HdyPress.m_PressValue - PlcData.m_HdyPress.m_PressSetValue) >= 0.5)//大于0.5mp，加压失败
 	{
-		Status = 3;
+		//zhj delete V1.11 Status = 3;
 	}
 	else//加压成功
 	{
@@ -2446,6 +2478,13 @@ char CBlastTestDlg::WriteFloat(unsigned char Slave, CString Addr, float DInt)
 //放锤按钮
 void CBlastTestDlg::OnBtnRealse() 
 {
+	if (isAddRdcord)
+	{
+		AddRecord(false);
+		return;
+	}
+
+
 	// TODO: Add your control notification handler code here
 	unsigned char SBuf[10];
 	memset(SBuf,0x00,10);
@@ -2520,7 +2559,9 @@ void CBlastTestDlg::OnBtnRealse()
 		MessageBox(_T("重锤高度必须在40mm和650mm之间"));
 	}
 	m_LastBlastStatus=m_CurrBlastStatus;//保存本次实验的爆炸状态 
-	if(!WriteInt(CMD_SLAVE_ADDR,CMD_HUN_HEIGHT,(int)(m_HunchHight*m_HunHightRata*10)))//写入重锤高度 20151019
+
+//zhj modify 	if(!WriteInt(CMD_SLAVE_ADDR,CMD_HUN_HEIGHT,(int)(m_HunchHight*m_HunHightRata*10)))//写入重锤高度 20151019
+	if(!WriteInt(CMD_SLAVE_ADDR,CMD_HUN_HEIGHT,(int)(m_HunchHight*10)))//写入重锤高度 20151019
 	{
 		m_HunReleaseBtn=0;//放锤按钮标志切换
 		return;
@@ -2544,6 +2585,9 @@ void CBlastTestDlg::OnBtnRealse()
 	PlcData.m_SoundComm.m_IsPeakMode = TRUE;//切换到峰值模式
 
 	PlcData.m_HdyPress.InitPressFun(0);//
+
+	//zhj add V1.15
+	PlcData.m_HdyPress.m_HdyData.AddSendData(CMD_DAVALUE, 0);
 	//创建新线程
 	HunThreedData * FinsihThreedData=new HunThreedData;
 	FinsihThreedData->hwnd=m_hWnd;
@@ -2727,4 +2771,141 @@ void CBlastTestDlg::OnEnChangeEdit18()
 	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
 
 	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+int startAdd = 0;
+// 模拟实验数据
+void CBlastTestDlg::AddRecord(bool result)
+{
+	unsigned char SBuf[10];
+	memset(SBuf, 0x00, 10);
+
+
+
+
+
+
+
+
+
+	//20150718
+	if (m_TestSpNo == _T(""))
+	{
+		MessageBox(_T("试样编号不能为空！"));
+		return;
+	}
+
+	CADODataSet DataSet;
+	DataSet.SetConnection(::GetConnection());
+
+	bool CRTLastTime = 0;
+
+
+	//计算自动编号
+	CString StrAutoNo;
+	char Buf[20];
+	memset(Buf, 0x00, 20);
+	sprintf(Buf, _T("A%2d%2d"), m_TestGroupNo, m_TestNo);
+	StrAutoNo = Buf;
+	StrAutoNo.Replace(' ', '0');
+	StrAutoNo += m_TestSpNo;
+
+	//写入记录
+
+	//如果指定记录已经存在，则删除该记录
+	DataSet.Open(_T("select * from TestData where 自动编号='") + StrAutoNo + _T("'"));
+	if (DataSet.GetRecordCount()>0)
+	{
+		DataSet.Delete();
+		DataSet.Save();
+	}
+	DataSet.Open(_T("select top 100 * from TestData where 试样编号='") + m_TestSpNo + _T("' order by 实验日期 DESC"));
+
+	//写入记录
+	DataSet.AddNew();
+	DataSet.SetFieldValue(_T("试样编号"), (_variant_t)m_TestSpNo);
+	DataSet.SetFieldValue(_T("自动编号"), (_variant_t)StrAutoNo);
+	DataSet.SetFieldValue(_T("样品名称"), (_variant_t)m_TestSpName);
+
+	if (result)
+	{
+		DataSet.SetFieldValue(_T("爆炸状态"), (_variant_t)1);
+		DataSet.SetFieldValue(_T("实验结果"), _T("爆炸"));
+	}
+	else
+	{
+		DataSet.SetFieldValue(_T("爆炸状态"), (_variant_t)0);
+		DataSet.SetFieldValue(_T("实验结果"), _T("不爆"));
+	}
+		
+
+	COleDateTime CurrTime;
+	COleDateTimeSpan ds;
+	
+	ds.SetDateTimeSpan(0, 0, startAdd*3, 0);
+	startAdd++;
+	CurrTime = CurrTime.GetCurrentTime() + ds;
+	//CString StrTime;
+	//StrTime=CurrTime.Format(_T("%Y-%m-%d %H:%M:%S"));
+	DataSet.SetFieldValue(_T("实验日期"), (_variant_t)CurrTime);
+	DataSet.SetFieldValue(_T("实验员"), (_variant_t)m_TestPerName);
+	DataSet.SetFieldValue(_T("实验类型"), (_variant_t)m_TestType);
+	DataSet.SetFieldValue(_T("重锤质量"), (_variant_t)m_HunchKg);
+	DataSet.SetFieldValue(_T("重锤高度"), (_variant_t)m_HunchHight);
+	DataSet.SetFieldValue(_T("药量"), (_variant_t)m_TestSpKg);
+	DataSet.SetFieldValue(_T("声级计峰值"), (_variant_t)m_SondLevel);//声级计峰值20150626
+
+	//DataSet.SetFieldValue(_T("温度变化"),(_variant_t)---);
+	DataSet.Save();
+
+	if (m_TestNo>1)//本组实验未完成
+		m_TestNo--;
+	else//本组实验完成
+	{
+		if (m_TestGroupNo>1)
+		{
+			m_TestGroupNo--;
+			CADODataSet DataSetUp;
+			DataSetUp.SetConnection(::GetConnection());
+			DataSetUp.Open(_T("select * from TestConditionSetup"));
+			m_TestNo = DataSetUp.ReadIntValue(_T("每组次数"));
+			//DataSetUp.CloseDataSet();
+		}
+		else //本组是最后一组，且已经完成,说明本次实验完成
+		{
+			if (m_Testmode == CRT_HEIGHT_MODE)
+			{
+				m_CRTHeight.m_SpNo = m_TestSpNo;
+				m_CRTHeight.m_DataTable = _T("TestData");
+				m_CRTHeight.m_d = m_StepLength;
+				m_CRTHeight.CalCRTResult();//计算并写入结果
+				m_CRTHeight.WriteRecord();
+			}
+			else if (m_Testmode == BLAST_RATE_MODE)
+			{
+				CalTestResult();
+			}
+			else
+				MessageBox(_T("无效的试验类型！"));
+
+
+			MessageBox(_T("本次实验完成"));
+			m_TestGroupNo = 0;
+			startAdd = 0;
+		}
+	}
+	//20152225
+	if ((m_CRTTestLastStep == CH_STEEP_D) && (m_CRTTestStep == CH_STEEP_FINISH))
+	{
+		DataSet.ClearRecord(_T("select * from TestData where 试样编号='") + m_TestSpNo + _T("' order by 实验日期 DESC"));
+		m_TestNo = m_MaxTestNo;
+	}
+	
+
+	//为了能马上更新现实，采用了再多查询一次的方式
+	DataSet.Open(_T("select top 100 * from TestData where 试样编号='") + m_TestSpNo + _T("' order by 实验日期 DESC"));
+	RefreshDGrid(m_Ado1, m_DataGrid1, _T(" SELECT Top 6  *  FROM TestData order by 实验日期 DESC"));
+
+	
 }

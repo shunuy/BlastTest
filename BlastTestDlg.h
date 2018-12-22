@@ -32,7 +32,6 @@
 #define CMD_HUN_RELESAE  _T("M0306")  /*为1正在释放，0释放完成*/
 #define CMD_SYSTEM_RESET _T("M0308")   /*写1复位系统*/
 #define CMD_PLATE_MODE_SWITCH _T("M0309")  /*手动平台和自动平台切换*/
-
 //v1.09add
 #define CMD_JIAYA _T("M0040") 
 
@@ -252,6 +251,9 @@ public:
 	CEdit m_PressSetValue;
 	afx_msg void OnEnChangeEdit11();
 	afx_msg void OnEnChangeEdit18();
+private:
+	// 模拟实验数据
+	void AddRecord(bool result);
 };
 extern struct StrPlcData PlcData;
 //{{AFX_INSERT_LOCATION}}

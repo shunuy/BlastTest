@@ -53,6 +53,9 @@
 #define IDB_AUTOPLATEBTN_ZJ             190
 #define IDB_BITMAP2                     191
 #define IDB_MANUALPLATEBTN_ZJ           191
+#define IDB_BITMAP1                     192
+#define IDB_REALSE1                     193
+#define IDB_REALSE2                     194
 #define IDC_GRDISPLAYVIEWER1            1000
 #define IDC_BUTTON1                     1001
 #define IDC_BTN_REPORT                  1001
@@ -171,7 +174,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        192
+#define _APS_NEXT_RESOURCE_VALUE        193
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1089
 #define _APS_NEXT_SYMED_VALUE           101

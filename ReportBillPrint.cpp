@@ -70,9 +70,9 @@ BOOL CReportBillPrint::OnInitDialog()
 
 	CString FileName;
 	if(m_TestType==_T("特性落高法"))
-		FileName= GetReportTemplatePath() + _T("My Report 02.grf");
+	    FileName = GetReportTemplatePath() + _T("My Report 02CRT.grf");
 	else
-		FileName= GetReportTemplatePath() + _T("My Report 02CRT.grf");
+		FileName = GetReportTemplatePath() + _T("My Report 02.grf");
 
 	m_pGridppReport->LoadFromFile( (LPCTSTR)FileName );
 	

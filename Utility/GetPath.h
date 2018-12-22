@@ -12,7 +12,8 @@ inline CString GetInstallPath(void)
 	CString strFileName( FileName );
 	int Index = strFileName.Find( _T("samples") );
 	CString Path = strFileName.Mid(0, Index);
-	return Path;
+	//zhj modify V1.05   return Path;
+	return _T("C:\\BlastTest\\");
 };
 
 

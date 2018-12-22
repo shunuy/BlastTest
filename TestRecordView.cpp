@@ -16,6 +16,7 @@
 #include "selbookmarks.h"
 #include "PrintReportDlg.h"
 #include "ReportBillPRint.h"
+#include "common.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -135,8 +136,8 @@ BOOL CTestRecordView::OnInitDialog()
 	if(DataSet.GetRecordCount()>0)
 	{
 		m_Type=DataSet.ReadStringValue(_T("实验类型"));
-		//m_HunKg=DataSet.ReadFloatValue(_T("重锤质量"));
-		m_HunKg = DataSet.ReadFloatValue(_T("加压压力"));
+		if (EquipmentType == TESTTYPE_ZHUJI) m_HunKg = DataSet.ReadFloatValue(_T("重锤质量"));
+		else m_HunKg = DataSet.ReadFloatValue(_T("加压压力"));
 		m_HunHight=DataSet.ReadFloatValue(_T("重锤高度"));
 		m_Person=DataSet.ReadStringValue(_T("实验员"));
 		m_TestHumi=DataSet.ReadFloatValue(_T("实验湿度"));
@@ -168,7 +169,7 @@ void CTestRecordView::DataRefresh(CString Str)
 {
 	CADODataSet DataSet;
 	DataSet.SetConnection(::GetConnection());
-	DataSet.Open(_T("select * from TestData where 试样编号='")+Str+_T("'"));
+	DataSet.Open(_T("select * from TestConditionSetup"));
 	m_Type=DataSet.ReadStringValue(_T("实验类型"));
 	
 	C_Recordset RSet=m_AdoRecord.GetRecordset();
@@ -191,8 +192,8 @@ void CTestRecordView::DataRefresh(CString Str)
 	if(DataSet.GetRecordCount()>0)
 	{
 		m_Type=DataSet.ReadStringValue(_T("实验类型"));
-		//m_HunKg=DataSet.ReadFloatValue(_T("重锤质量"));
-		m_HunKg = DataSet.ReadFloatValue(_T("加压压力"));
+		if (EquipmentType == TESTTYPE_ZHUJI) m_HunKg = DataSet.ReadFloatValue(_T("重锤质量"));
+		else	 m_HunKg = DataSet.ReadFloatValue(_T("压力设定"));
 		m_HunHight=DataSet.ReadFloatValue(_T("重锤高度"));
 		m_Person=DataSet.ReadStringValue(_T("实验员"));
 		m_TestHumi=DataSet.ReadFloatValue(_T("实验湿度"));
