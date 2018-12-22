@@ -1,0 +1,56 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: BlastTest - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/BlastTest.res" /d "_DEBUG" /d "_AFXDLL" "E:\加压摩擦\上位机程序\BlastTest\BlastTest.rc"" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPEEF7.tmp" with contents
+[
+winmm.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/BlastTest.pdb" /debug /machine:I386 /out:"Debug/BlastTest.exe" /pdbtype:sept 
+".\Debug\_recordset.obj"
+".\Debug\adodc.obj"
+".\Debug\BlastTest.obj"
+".\Debug\BlastTestDlg.obj"
+".\Debug\CalSum.obj"
+".\Debug\column.obj"
+".\Debug\columns.obj"
+".\Debug\CRTHeight.obj"
+".\Debug\datagrid.obj"
+".\Debug\DebugDlg.obj"
+".\Debug\DelayFun.obj"
+".\Debug\FATEK Protocol.obj"
+".\Debug\field.obj"
+".\Debug\fields.obj"
+".\Debug\font.obj"
+".\Debug\HdyPress.obj"
+".\Debug\picture.obj"
+".\Debug\PID.obj"
+".\Debug\PORT.obj"
+".\Debug\PrintReportDlg.obj"
+".\Debug\ReportBillPrint.obj"
+".\Debug\selbookmarks.obj"
+".\Debug\SLComm.obj"
+".\Debug\StdAfx.obj"
+".\Debug\TestConditon.obj"
+".\Debug\TestRecordView.obj"
+".\Debug\TestSpData.obj"
+".\Debug\UserSetupDlg.obj"
+".\Debug\WfComm.obj"
+".\Debug\ADO.obj"
+".\Debug\BlastTest.res"
+]
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPEEF7.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Linking...
+
+
+
+<h3>Results</h3>
+BlastTest.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,30 @@
+修改记录：
+1、20150508 将主界面两个DataGrid的属性设置为AllowUpdata False(取消选择)，意在不让该控件由修改和编辑的功能
+2、连接数据表
+	CADODataSet DataSet;
+	DataSet.SetConnection(::GetConnection());
+	DataSet.Open(_T("select top 20 * from SampleTable order by ID DESC"));
+3.WriteRecord()函数还需要继续完善
+4、获得当前时间
+	COleDateTime CurrTime;
+	CurrTime=CurrTime.GetCurrentTime();
+	//CString StrTime;
+	//StrTime=CurrTime.Format(_T("%Y-%m-%d %H:%M:%S"));
+5、如果需要烟雾判爆，需要增加烟雾记录以及修改WriteRecord()函数
+6、CalTestResult()//计算实验结果，爆炸率，可行度等。未完成
+7、重锤高度宏定义未完成。
+8、需将办公室电脑程序中的实时爆炸率更新和系统复位后清除装药和放捶的功能程序放入本程序20150625。
+9、DataGrid更新不及时的解决办法，调用更新之前，使用DataSet.Open()再查询一次。
+10、20151021去长沙调试特性落高法逻辑。
+
+版本：20151023 完成增加特性落高法的报表计算。
+      1124下班版本
+
+开始摩擦感度设计：
+1、播放语音：PlaySound("C:\\BlastTest\\sound\\欢迎使用.wav", NULL, SND_ASYNC | SND_NODEFAULT);
+2、20160607长沙调试修改：解决无法修改重锤高度。
+3、20160808修改内容：增加两个与PLC通信读写浮点型的函数，修改直接从PLC读取浮点型显示和直接写入浮点型，
+    删除通信进程中的PlcData.m_HdyPress.PressFun();//调用液压加压程序。
+4、20160812修改写零点不乘10，修改压力设定与显示为两位小数的整形。
+
+

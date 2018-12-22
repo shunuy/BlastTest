@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{b684aacb-8a08-47d5-96f6-ffc1a08752c4}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{1c44fb15-29ac-4936-ae8d-b7923eab2552}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{7bc690c4-55cc-4814-939f-cdabe3c73a6d}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="ADO">
+      <UniqueIdentifier>{ac1064a4-3b38-44ab-b592-ab42661b4e9e}</UniqueIdentifier>
+      <Extensions>.c .h</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="_recordset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="adodc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BlastTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BlastTestDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commution\CalSum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="column.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="columns.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CRTHeight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="datagrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DelayFun.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commution\FATEK Protocol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="field.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fields.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HdyPress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="picture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PID.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commution\PORT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrintReportDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReportBillPrint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="selbookmarks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SLComm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestConditon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestRecordView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSpData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserSetupDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WfComm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ADO\ADO.cpp">
+      <Filter>ADO</Filter>
+    </ClCompile>
+    <ClCompile Include="MyDisCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EditSpData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BlastTest.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="_recordset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="adodc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlastTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlastTestDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commution\calSum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="column.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="columns.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CRTHeight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="datagrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DelayFun.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commution\FATEK Protocol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="field.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fields.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HdyPress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="picture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commution\PORT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintReportDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReportBillPrint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="selbookmarks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SLComm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestConditon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestRecordView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSpData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserSetupDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WfComm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ADO\ADO.h">
+      <Filter>ADO</Filter>
+    </ClInclude>
+    <ClInclude Include="MyDisCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorkbook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorksheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CRange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorkbooks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorksheets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EditSpData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Blast Bk.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\BlastTest.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\爆炸指示灯.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\查看记录按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\打开报表.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\放锤-灰.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\平台上升按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\平台下降按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\启动键盘.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\实验记录.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\实验记录按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\实验设置.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\实验设置按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\试样数据设置背景.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\手动平台.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\停止上升按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\停止下降按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\退出按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\未报指示.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\选中标志.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\样品数据按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\用户设置.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\用户设置背景.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\载入按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\载入确定按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\重锤释放.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\装药按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\装药完成按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\自动平台.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\手动加压.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\油缸前进.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\油缸后退.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\液压停止按钮.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Blast Bk MC.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\自动平台_old.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\手动平台_ZJ.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\BlastTest20161017\BlastTest\res\Blast Bk.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+    <Text Include="说明.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\BlastTest.rc2">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>
