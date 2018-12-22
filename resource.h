@@ -165,6 +165,7 @@
 #define IDC_HDYFORWARD                  1086
 #define IDC_BUTTON4                     1087
 #define IDC_HDYBACK                     1087
+#define IDC_BUTTON3                     1088
 
 // Next default values for new objects
 // 
@@ -172,7 +173,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        192
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1088
+#define _APS_NEXT_CONTROL_VALUE         1089
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

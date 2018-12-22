@@ -2385,7 +2385,11 @@ char CBlastTestDlg::WriteInt(unsigned char Slave,CString Addr, int DInt)
 	{
 		CString ErrMessage;
 		ErrMessage=_T("”ÎPLC–¥»Î ß∞‹£°µÿ÷∑£∫")+Addr;
-		MessageBox(ErrMessage);
+
+	
+
+		//zhj modify V1.05 MessageBox(ErrMessage);
+		WriteLog(ErrMessage);
 		return FALSE;
 	}		
 	return TRUE;
