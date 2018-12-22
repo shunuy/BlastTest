@@ -586,8 +586,8 @@ DWORD WINAPI ReadPlcDataPro(LPVOID lpParameter )
 			//PlcData.PlateHight=(float)FATEK_GetIntData(0,(char *)SBuf)/(10.0f);
 			//PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf);//20160809改成直接显示
 			if (EquipmentType == TESTTYPE_ZHUJI)	PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf) / 10.f;//zhj modify V1.01
-			else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf);
-			
+			//zhj modify V1.04 else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf);
+			else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf)/10.f;
 
 			if(!GetOutBuffCount())//读取烟雾传感器的实时值
 				FATEK_ReadMultiReg(CMD_SLAVE_ADDR,CMD_SMOG_REAL,0x01, SBuf);//读取烟雾实时值
