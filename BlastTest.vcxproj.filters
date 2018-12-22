@@ -367,6 +367,12 @@
     <Image Include="..\..\..\BlastTest20161017\BlastTest\res\Blast Bk.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\realse1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\realse2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

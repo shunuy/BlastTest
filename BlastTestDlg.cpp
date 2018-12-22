@@ -197,7 +197,7 @@ void CBlastTestDlg::DoDataExchange(CDataExchange* pDX)
        //zhj modify v1.15
 		float aa = 0, bb = 1;
 		
-		if (m_HunReleaseBtn)
+		if (m_HunReleaseBtn&&isProcess)
 		{
 			count++;
 			if (count > 2000) count = 2000;
@@ -259,6 +259,7 @@ BEGIN_MESSAGE_MAP(CBlastTestDlg, CDialog)
 	ON_BN_CLICKED(IDC_HDYFORWARD, &CBlastTestDlg::OnBnClickedHdyforward)
 	ON_BN_CLICKED(IDC_HDYBACK, &CBlastTestDlg::OnBnClickedHdyback)
 	ON_EN_CHANGE(IDC_EDIT18, &CBlastTestDlg::OnEnChangeEdit18)
+	ON_BN_CLICKED(IDC_BUTTON2, &CBlastTestDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1720,7 +1721,11 @@ BOOL CBlastTestDlg::PreTranslateMessage(MSG* pMsg)
 		m_BtnPrepar.SizeToContent();
 		m_BtnPrepar.RedrawWindow();
 	}
-
+	if (((pMsg->message == WM_KEYDOWN) | (pMsg->message == WM_KEYUP)) & (pMsg->wParam == VK_F3))
+	{
+		isProcess = false;
+		AfxMessageBox(_T("按键无效"));
+	}
 	
 
 	return CDialog::PreTranslateMessage(pMsg);
@@ -2908,4 +2913,10 @@ void CBlastTestDlg::AddRecord(bool result)
 	RefreshDGrid(m_Ado1, m_DataGrid1, _T(" SELECT Top 6  *  FROM TestData order by 实验日期 DESC"));
 
 	
+}
+
+
+void CBlastTestDlg::OnBnClickedButton2()
+{
+	// TODO:  在此添加控件通知处理程序代码
 }

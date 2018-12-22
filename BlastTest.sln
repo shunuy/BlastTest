@@ -5,6 +5,13 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlastTest", "BlastTest.vcxproj", "{770FEBC5-D589-4A70-9506-75C965C4D204}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "下位机", "下位机", "{8C4F1C24-73FD-4E00-84FF-969FCFFE180C}"
+	ProjectSection(SolutionItems) = preProject
+		下位机\170726摩擦（变频器）_V1.09_余卓终稿.pdw = 下位机\170726摩擦（变频器）_V1.09_余卓终稿.pdw
+		下位机\20161010摩擦（变频器）_V1.08_黄起勇终稿.pdw = 下位机\20161010摩擦（变频器）_V1.08_黄起勇终稿.pdw
+		下位机\版本管理.vsdx = 下位机\版本管理.vsdx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

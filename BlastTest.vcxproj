@@ -255,6 +255,8 @@
     <Image Include="res\Blast Bk MC.bmp" />
     <Image Include="res\Blast Bk.bmp" />
     <Image Include="res\BlastTest.ico" />
+    <Image Include="res\realse1.bmp" />
+    <Image Include="res\realse2.bmp" />
     <Image Include="res\手动加压.bmp" />
     <Image Include="res\手动平台_ZJ.bmp" />
     <Image Include="res\油缸前进.bmp" />

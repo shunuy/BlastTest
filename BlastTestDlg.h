@@ -191,6 +191,8 @@ public:
 	int m_Testmode;//试验方式，0--爆破试验，1--特性落高法
 	float m_StepLength;//试验步长
 
+	float isProcess=true;//是否处理压力数据。
+
 	CCRTHeight m_CRTHeight;//特性落高法对象
 	//CHdyPress m_HdyPress;//液压加压对象
 	//CWfComm m_SondComm;//声级计通信串口
@@ -254,6 +256,8 @@ public:
 private:
 	// 模拟实验数据
 	void AddRecord(bool result);
+public:
+	afx_msg void OnBnClickedButton2();
 };
 extern struct StrPlcData PlcData;
 //{{AFX_INSERT_LOCATION}}
