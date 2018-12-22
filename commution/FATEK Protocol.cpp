@@ -17,6 +17,9 @@
 #define PLCComErr2  1
 #else
 #define PLCComErr2  -1
+
+
+
 #endif
 
 unsigned char FATEK_Buff[256];

@@ -1,7 +1,6 @@
 // ADO.h: interface for the CADO class.
 //
 //////////////////////////////////////////////////////////////////////
-
 #if !defined(AFX_ADO_H__EE0962C4_DC53_489D_981F_B112A39F9C1B__INCLUDED_)
 #define AFX_ADO_H__EE0962C4_DC53_489D_981F_B112A39F9C1B__INCLUDED_
 
@@ -9,8 +8,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define RUN_IN_XP_PLATEFORM
-//#define RUN_IN_XP_PLATEFORM_X64
+//#define RUN_IN_XP_PLATEFORM
+#define RUN_IN_XP_PLATEFORM_X64
 //#define RUN_IN_WIN7_PLATEFORM
 
 #ifdef RUN_IN_WIN7_PLATEFORM   /*64或32位的编译环境，如果待发布的程序只需运行在WIN7及其以上系统时使用，在XP系统中编译也可以使用该语句*/

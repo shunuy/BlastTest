@@ -33,6 +33,9 @@
 #define CMD_SYSTEM_RESET _T("M0308")   /*写1复位系统*/
 #define CMD_PLATE_MODE_SWITCH _T("M0309")  /*手动平台和自动平台切换*/
 
+//v1.09add
+#define CMD_JIAYA _T("M0040") 
+
 #define CMD_HUN_ZEROPOINT    _T("D00000")  /*重锤零点*/
 #define CMD_GET_HUN_ERROR    _T("D00005")  /*大于3说明抓捶故障*/
 //#define CMD_SOUND_LEVEL_PEAK _T("D00304")   /*声级计峰值*/

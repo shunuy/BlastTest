@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "BlastTest.h"
 #include "TestConditon.h"
+#include "common.h"
 
 #include "ADO/ADO.h"
 
@@ -111,6 +112,7 @@ BOOL CTestConditon::OnInitDialog()
 	
 	// TODO: Add extra initialization here
 	((CComboBox*)GetDlgItem(IDC_TYPE))->AddString("爆炸概率法");
+	if (EquipmentType == TESTTYPE_ZHUJI) ((CComboBox*)GetDlgItem(IDC_TYPE))->AddString("特性落高法");
 	//((CComboBox*)GetDlgItem(IDC_TYPE))->AddString("特性落高法");
 	//((CComboBox*)GetDlgItem(IDC_TYPE))->AddString("摩擦感度法");
 	((CComboBox*)GetDlgItem(IDC_TYPE))->SetCurSel(0);

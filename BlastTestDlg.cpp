@@ -586,8 +586,9 @@ DWORD WINAPI ReadPlcDataPro(LPVOID lpParameter )
 			//PlcData.PlateHight=(float)FATEK_GetIntData(0,(char *)SBuf)/(10.0f);
 			//PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf);//20160809改成直接显示
 			if (EquipmentType == TESTTYPE_ZHUJI)	PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf) / 10.f;//zhj modify V1.01
-			//zhj modify V1.04 else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf);
-			else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf)/10.f;
+			//zhj modify V1.04  V1.08
+			else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf);
+			//else PlcData.PlateHight = (float)FATEK_GetIntData(0, (char *)SBuf)/10.f;
 
 			if(!GetOutBuffCount())//读取烟雾传感器的实时值
 				FATEK_ReadMultiReg(CMD_SLAVE_ADDR,CMD_SMOG_REAL,0x01, SBuf);//读取烟雾实时值
@@ -1000,9 +1001,22 @@ void CBlastTestDlg::OnBtnPraper()
 	if(!WriteByte(CMD_SLAVE_ADDR,CMD_PLACE_EXPLOSIVE,m_PlaceExpPrepar))
 	{
 		m_PlaceExpPrepar=!m_PlaceExpPrepar;//将指示变回来
+
+	
+
 		MessageBox(_T("与PLC通信失败！"));
 		return ;
 	}
+
+	//v1.09add
+	if (!m_PlaceExpPrepar)
+	{
+		if (!WriteByte(CMD_SLAVE_ADDR, CMD_JIAYA, 1))
+		{
+			MessageBox(_T("与PLC通信失败！"));
+		}
+	}
+
 
 	SetParperBtnBit(m_PlaceExpPrepar);//改变图片显示
 	SetBlastIndexBit(0);//改变爆炸状态指示灯的显示为灰色
@@ -1243,8 +1257,9 @@ void CBlastTestDlg::OnTestSpInBtn()
 		//将重锤高度写入PLC
 		char SBuf[10];
 		CString str;
-		//int Hight=(int)(m_HunchHight*m_HunHightRata*10);//20150607添加高度系数
-		int Hight = (int)(m_HunchHight*m_HunHightRata);//20150809取消乘10
+		int Hight = (int)(m_HunchHight * 10);
+//zhj delete V1.11 int Hight=(int)(m_HunchHight*m_HunHightRata*10);//20150607添加高度系数
+		//zhj delete V1.10 int Hight = (int)(m_HunchHight*m_HunHightRata);//20150809取消乘10
 		str.Format("%2X",Hight);//从机地址转换为16进制字符串
 		str.Replace(' ','0');
 		memset(SBuf,'0',10);
@@ -2498,11 +2513,11 @@ void CBlastTestDlg::OnBtnRealse()
 		m_HunchHight = m_CRTHeight.m_CurrHeight;//20160614
 	}
 
-	if((m_HunchHight*m_HunHightRata<180) || (m_HunchHight*m_HunHightRata>650))//重锤高度必须在245mm和550mm之间
+	if((m_HunchHight*m_HunHightRata<40) || (m_HunchHight*m_HunHightRata>650))//重锤高度必须在245mm和550mm之间
 	{
 		m_HunchHight=0;
 		m_HunReleaseBtn=0;//放锤按钮标志切换
-		MessageBox(_T("重锤高度必须在180mm和650mm之间"));
+		MessageBox(_T("重锤高度必须在40mm和650mm之间"));
 	}
 	m_LastBlastStatus=m_CurrBlastStatus;//保存本次实验的爆炸状态 
 	if(!WriteInt(CMD_SLAVE_ADDR,CMD_HUN_HEIGHT,(int)(m_HunchHight*m_HunHightRata*10)))//写入重锤高度 20151019

@@ -265,18 +265,10 @@ void CTestRecordView::OnChangeblast()
 {
 	// TODO: Add your control notification handler code here
 	CADODataSet DataSet;
-	int aa = 0;
 	DataSet.SetConnection(::GetConnection());
 	DataSet.Open(_T("select * from TestData where ÊÔÑù±àºÅ='")+m_SpNo+_T("'"));
-	aa = DataSet.GetRecordCount();
-	//zhj modify V1.05
-	//if(DataSet.GetRecordCount()>=1)
-	//	DataSet.move(DataSet.GetRecordCount()-1);
-	//else return;
-
-	if (aa >= 1)
-		while (!DataSet.IsadoEOF())
-			DataSet.Next();
+	if(DataSet.GetRecordCount()>=1)
+		DataSet.move(DataSet.GetRecordCount()-1);
 	else return;
 
 	short BlastIndex=DataSet.ReadIntValue(_T("±¬Õ¨×´Ì¬"));
