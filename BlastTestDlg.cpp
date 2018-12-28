@@ -1031,7 +1031,8 @@ void CBlastTestDlg::OnBtnPraper()
 	if(!WriteByte(CMD_SLAVE_ADDR,CMD_PLACE_EXPLOSIVE,m_PlaceExpPrepar))
 	{
 		m_PlaceExpPrepar=!m_PlaceExpPrepar;//将指示变回来
-		MessageBox(_T("与PLC通信失败！"));
+	    //MessageBox(_T("与PLC通信失败！"));
+		WriteLog(_T("与PLC通信失败！"));
 		return ;
 	}
 	//v1.09add
@@ -1039,7 +1040,8 @@ void CBlastTestDlg::OnBtnPraper()
 	{
 		if (!WriteByte(CMD_SLAVE_ADDR, CMD_JIAYA, 1))
 		{
-			MessageBox(_T("与PLC通信失败！"));
+			//MessageBox(_T("与PLC通信失败！"));
+			WriteLog(_T("与PLC通信失败！"));
 		}
 	}
 	SetParperBtnBit(m_PlaceExpPrepar);//改变图片显示
@@ -1445,7 +1447,8 @@ void CBlastTestDlg::OnOpplatebtn()
 		if (Fatek >= CMD_SEND_REPART_COUNT)
 		{
 			m_PlateMode = PlatModeOld;
-			MessageBox(_T("与PLC通信失败！"));
+			//MessageBox(_T("与PLC通信失败！"));
+			WriteLog(_T("与PLC通信失败！"));
 			return;
 		}
 	}
@@ -1559,7 +1562,8 @@ void CBlastTestDlg::OnPlateUp()
 	if (Fatek>=CMD_SEND_REPART_COUNT)
 	{
 		m_PlateUpState=!m_PlateUpState;//将指示变回来
-		MessageBox(_T("与PLC通信失败！"));
+		//MessageBox(_T("与PLC通信失败！"));
+		WriteLog(_T("与PLC通信失败！"));
 		return;
 	}
 
@@ -1605,7 +1609,8 @@ void CBlastTestDlg::OnPlateDown()
 	if (Fatek>=CMD_SEND_REPART_COUNT)
 	{
 		m_PlateDownState=!m_PlateDownState;//将指示变回来
-		MessageBox(_T("与PLC通信失败！"));
+		//MessageBox(_T("与PLC通信失败！"));
+		WriteLog(_T("与PLC通信失败！"));
 		return;
 	}
 
@@ -2353,7 +2358,8 @@ char CBlastTestDlg::WriteByte(unsigned char Slave,CString Addr, char Dbyte)
 	SetEvent(GEvent);//变为有信号状态，让线程可以发生数据
 	if (Fatek>=CMD_SEND_REPART_COUNT)
 	{
-		MessageBox(_T("与PLC通信失败！"));
+		//MessageBox(_T("与PLC通信失败！"));
+		WriteLog(_T("与PLC通信失败！"));
 		return FALSE;
 	}
 	//读取
@@ -2367,7 +2373,8 @@ char CBlastTestDlg::WriteByte(unsigned char Slave,CString Addr, char Dbyte)
 	SetEvent(GEvent);//变为有信号状态，让线程可以发送数据
 	if (Fatek>=CMD_SEND_REPART_COUNT)
 	{
-		MessageBox(_T("与PLC通信失败！"));
+		//MessageBox(_T("与PLC通信失败！"));
+		WriteLog(_T("与PLC通信失败！"));
 		return FALSE;
 	}
 	//判断是否相等
@@ -2411,7 +2418,8 @@ char CBlastTestDlg::WriteInt(unsigned char Slave,CString Addr, int DInt)
 	SetEvent(GEvent);//变为有信号状态，让线程可以发生数据
 	if (Fatek>=CMD_SEND_REPART_COUNT)
 	{
-		MessageBox(_T("与PLC通信失败！"));
+		//MessageBox(_T("与PLC通信失败！"));
+		WriteLog(_T("与PLC通信失败！"));
 		return FALSE;
 	}
 	//读取
@@ -2425,7 +2433,8 @@ char CBlastTestDlg::WriteInt(unsigned char Slave,CString Addr, int DInt)
 	SetEvent(GEvent);//变为有信号状态，让线程可以发生数据
 	if (Fatek>=CMD_SEND_REPART_COUNT)
 	{
-		MessageBox(_T("与PLC通信失败！"));
+		//MessageBox(_T("与PLC通信失败！"));
+		WriteLog(_T("与PLC通信失败！"));
 		return FALSE;
 	}
 #ifdef _DEBUG3 
@@ -2474,7 +2483,8 @@ char CBlastTestDlg::WriteFloat(unsigned char Slave, CString Addr, float DInt)
 	SetEvent(GEvent);//变为有信号状态，让线程可以发生数据
 	if (Fatek >= CMD_SEND_REPART_COUNT)
 	{
-		MessageBox(_T("与PLC通信失败！"));
+		//MessageBox(_T("与PLC通信失败！"));
+		WriteLog(_T("与PLC通信失败！"));
 		return FALSE;
 	}
 	
