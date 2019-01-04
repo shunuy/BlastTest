@@ -11,6 +11,17 @@
 #include "BlastTest.h"
 #include "TestRecordView.h"
 
+#include "CApplication.h"
+#include "CWorkbook.h"
+#include "CWorkbooks.h"
+#include "CWorksheet.h"
+#include "CWorksheets.h"
+#include "CRange.h"
+
+
+
+
+
 #include "_recordset.h"
 #include "ADO/ADO.h"
 #include "selbookmarks.h"
@@ -145,6 +156,8 @@ BOOL CTestRecordView::OnInitDialog()
 		m_CombSpNo=m_SpNo;
 		UpdateData(FALSE);
 	}
+
+
 	
 	SetTimer(1,100,NULL);
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -199,7 +212,9 @@ void CTestRecordView::DataRefresh(CString Str)
 		m_TestHumi=DataSet.ReadFloatValue(_T("实验湿度"));
 		m_TestTemp=DataSet.ReadFloatValue(_T("实验温度"));
 		UpdateData(FALSE);
+		
 	}
+
 }
 //试样编号选择发生改变
 void CTestRecordView::OnSelchangeCombspno() 
@@ -238,23 +253,230 @@ void CTestRecordView::OnDelsel()
 
 void CTestRecordView::OnPrintreport() 
 {
-	// TODO: Add your control notification handler code here
-	CPrintReportDlg dlg;
-	dlg.m_SpNo=m_SpNo;
-	dlg.m_Person=m_Person;
-	dlg.m_Type=m_Type;
-	dlg.m_HunKg=m_HunKg;
-	dlg.m_HunHight=m_HunHight;
-	dlg.m_TestHumi=m_TestHumi;
-	dlg.m_TestTemp=m_TestTemp;
-	dlg.DoModal();
-	DataRefresh(m_SpNo);
+
+	CApplication exApp;//应用程序对象
+	CWorkbook exBook;//工作簿对象
+	CWorkbooks exBooks;//工作簿集合对象
+	CWorksheets exSheets;//工作表集合
+	CWorksheet exSheet;//工作表对象
+	CRange exRange;
+	LPDISPATCH lpDisp = NULL;
+
+	if (!exApp.CreateDispatch(_T("Excel.Application")))
+	{
+		AfxMessageBox(_T("Excel failed to start!"));
+		return;
+	}
+	//CString aa = exApp.get_Version();
+
+	//AfxMessageBox(aa);
+	exApp.put_Visible(false);
+	exBooks.AttachDispatch(exApp.get_Workbooks());
+	CString strbookPath = "c:\\BlastTest\\zhuangji.xls";
+	if (EquipmentType == TESTTYPE_MOCHA) strbookPath = "c:\\BlastTest\\mocha.xls";
+
+	try
+	{
+
+		
+		exBook.AttachDispatch(exBooks.Add(_variant_t(strbookPath)));
+	//	lpDisp = exBooks.Open(strbookPath, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing);
+	//	exBook.AttachDispatch(lpDisp);
+	}
+	catch (...)
+	{
+		lpDisp = exBooks.Add(vtMissing);
+		exBook.AttachDispatch(lpDisp);
+	}
+
+
+	/*得到工作簿中的Sheet的容器*/
+	exSheets.AttachDispatch(exBook.get_Sheets());
+
+	/*打开一个Sheet，如不存在，就新增一个Sheet*/
+	CString strSheetName = _T("Sheet1");
+	try
+	{
+		/*打开一个已有的Sheet*/
+		lpDisp = exSheets.get_Item(_variant_t(strSheetName));
+		exSheet.AttachDispatch(lpDisp);
+	}
+	catch (...)
+	{
+		/*创建一个新的Sheet*/
+		lpDisp = exSheets.Add(vtMissing, vtMissing, _variant_t((long)1), vtMissing);
+		exSheet.AttachDispatch(lpDisp);
+		exSheet.put_Name(strSheetName);
+	}
+
+
+
+	/*向Sheet中写入多个单元格,规模为10*10 */
+	lpDisp = exSheet.get_Range(_variant_t("B5"), _variant_t("Z6"));
+	exRange.AttachDispatch(lpDisp);
+
+	VARTYPE vt = VT_I4; /*数组元素的类型，long*/
+	SAFEARRAYBOUND sabWrite[2]; /*用于定义数组的维数和下标的起始值*/
+	sabWrite[0].cElements =2;
+	sabWrite[0].lLbound = 0;
+	sabWrite[1].cElements = 25;
+	sabWrite[1].lLbound = 0;
+
+	COleSafeArray olesaWrite;
+	olesaWrite.Create(vt, sizeof(sabWrite) / sizeof(SAFEARRAYBOUND), sabWrite);
+
+	/*通过指向数组的指针来对二维数组的元素进行间接赋值*/
+	long(*pArray)[2] = NULL;
+	olesaWrite.AccessData((void **)&pArray);
+	memset(pArray, 0, sabWrite[0].cElements * sabWrite[1].cElements * sizeof(long));
+
+	/*释放指向数组的指针*/
+	olesaWrite.UnaccessData();
+	pArray = NULL;
+
+	/*对二维数组的元素进行逐个赋值*/
+	long index[2] = { 0, 0 };
+	long lFirstLBound = 0;
+	long lFirstUBound = 0;
+	long lSecondLBound = 0;
+	long lSecondUBound = 0;
+	olesaWrite.GetLBound(1, &lFirstLBound);
+	olesaWrite.GetUBound(1, &lFirstUBound);
+	olesaWrite.GetLBound(2, &lSecondLBound);
+	olesaWrite.GetUBound(2, &lSecondUBound);
+
+
+	float * PRate = new float[2];//用于存放每组的爆炸率
+	float Rate, LRate, LRateTmp, HRate, HRateTmp;//总的概率，置信下限，置信上限
+	char buf[20];
+	CString str;
+	CADODataSet DataSet;
+	DataSet.SetConnection(::GetConnection());
+	float yaoliang=0.03f;
+	_variant_t aa;
+	for (long i = lFirstLBound; i <= lFirstUBound; i++)
+	{
+	    
+		memset(buf, 0x00, 20);
+		sprintf(buf, _T("A%2d__"), i + 1);
+		str = buf;
+		str += m_SpNo;
+		str.Replace(' ', '0');
+		str = "select  * from TestData where  自动编号 like'" + str + "' order by 实验日期 DESC";
+		DataSet.Open(_T(str));
+	
+		index[0] = i;
+		for (long j = lSecondLBound; j <= lSecondUBound; j++)
+		{
+
+			long lElement = 0;
+			if (j<DataSet.GetRecordCount())
+			{
+
+				lElement = DataSet.ReadIntValue(_T("爆炸状态"));
+				yaoliang = DataSet.ReadFloatValue(_T("药量"));
+				 aa = DataSet.ReadValue(_T("实验日期"));
+				DataSet.Next();
+			}
+			index[1] = j;
+			olesaWrite.PutElement(index, &lElement);
+
+
+		}
+	}
+
+	
+
+	/*把ColesaWritefeArray变量转换为VARIANT,并写入到Excel表格中*/
+	VARIANT varWrite = (VARIANT)olesaWrite;
+	exRange.put_Value2(varWrite);
+
+
+	
+	exRange.AttachDispatch(exSheet.get_Cells(), true);
+	//DataSet.CloseDataSet();
+	//DataSet.SetConnection(::GetConnection());
+	str = _T("select * from SampleTable where 试样编号='") + m_SpNo + _T("'");
+	DataSet.Open(_T(str));
+	str = "";
+	//int aaqz = DataSet.GetRecordCount();
+	if (DataSet.GetRecordCount()>0) str=DataSet.ReadStringValue(_T("样品名称"));
+	exRange.put_Item(_variant_t((long)(3)), _variant_t((long)(3)),
+		_variant_t(str));
+
+	CString stri = "", strf = "",yaoliangT = "";
+	stri.Format("%0.0f", m_HunHight);
+	if (EquipmentType == TESTTYPE_MOCHA) strf.Format("%.2f", m_HunKg);
+	else  strf.Format("%0.0f", m_HunKg);
+	yaoliang = yaoliang * 1000;
+	yaoliangT.Format("%0.0f", yaoliang);
+	if (EquipmentType == TESTTYPE_MOCHA)	str = _T("加压压力:") + strf + _T("MPa; 落高：") + stri + _T("mm； 药量：") + yaoliangT + _T("mg");
+	else str = _T("锤重:") + strf + _T("MPa; 落高：") + stri + _T("mm； 药量：") + yaoliangT + _T("mg");
+	exRange.put_Item(_variant_t((long)(14)), _variant_t((long)(7)),
+		_variant_t(str));
+
+	exRange.put_Item(_variant_t((long)(3)), _variant_t((long)(16)),
+		aa);
+
+	exRange.put_Item(_variant_t((long)(3)), _variant_t((long)(25)),
+		_variant_t(m_TestHumi));
+
+	exRange.put_Item(_variant_t((long)(3)), _variant_t((long)(22)),
+		_variant_t(m_TestTemp));
+
+
+	exRange.put_Item(_variant_t((long)(3)), _variant_t((long)(10)),
+		_variant_t(m_SpNo));
+
+	exRange.put_Item(_variant_t((long)(19)), _variant_t((long)(3)),
+		_variant_t(m_Person));
+
+	exApp.put_Visible(true);
+	//exApp.SetVisible(true);
+	//exBook.PrintOut(_variant_t(false));
+	exBook.PrintPreview(_variant_t(true));
+
+	/*根据文件的后缀名选择保存文件的格式*/
+	//CString strSaveAsName = _T("C:\\new.xlsx");
+	//CString strSuffix = strSaveAsName.Mid(strSaveAsName.ReverseFind(_T('.')));
+	//XlFileFormat NewFileFormat = xlOpenXMLWorkbook;
+	//if (0 == strSuffix.CompareNoCase(_T(".xls")))
+	//{
+	//	NewFileFormat = xlExcel8;
+	//}
+	//exBook.SaveAs(_variant_t(strSaveAsName),vtMissing, vtMissing, vtMissing, vtMissing,
+	//	vtMissing, 0, vtMissing, vtMissing, vtMissing,
+	//vtMissing, vtMissing);
+
+	exRange.ReleaseDispatch();
+	exSheet.ReleaseDispatch();
+	exSheets.ReleaseDispatch();
+	exBook.ReleaseDispatch();
+	exBooks.ReleaseDispatch();
+	exApp.ReleaseDispatch();
+
+
+
+
+	//// TODO: Add extra initialization here
+	//// TODO: Add your control notification handler code here
+	//CPrintReportDlg dlg;
+	//dlg.m_SpNo=m_SpNo;
+	//dlg.m_Person=m_Person;
+	//dlg.m_Type=m_Type;
+	//dlg.m_HunKg=m_HunKg;
+	//dlg.m_HunHight=m_HunHight;
+	//dlg.m_TestHumi=m_TestHumi;
+	//dlg.m_TestTemp=m_TestTemp;
+	//dlg.DoModal();
+	//DataRefresh(m_SpNo);
 
 }
 
 void CTestRecordView::OnReportbillbtn() 
 {
 	// TODO: Add your control notification handler code here
+
 	CReportBillPrint dlg;
 	dlg.m_SpNo=m_SpNo;
 	dlg.DoModal();

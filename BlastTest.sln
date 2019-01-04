@@ -12,6 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "下位机", "下位机", "{
 		下位机\版本管理.vsdx = 下位机\版本管理.vsdx
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "说明", "说明", "{A5214ADE-BC81-48D6-9C56-5C8A4F5EB757}"
+	ProjectSection(SolutionItems) = preProject
+		说明\mocha.xls = 说明\mocha.xls
+		说明\zhuangji.xls = 说明\zhuangji.xls
+		下位机\修改记录.txt = 下位机\修改记录.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

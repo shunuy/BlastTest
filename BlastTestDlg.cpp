@@ -910,7 +910,8 @@ void CBlastTestDlg::OnTimer(UINT nIDEvent)
 	}
 	if(2==nIDEvent)//更新DataGrid的显示
 	{
-		
+		KillTimer(2);
+
 		C_Recordset RSet=m_Ado_OPRecord.GetRecordset();
 		RSet.Requery(adConnectUnspecified);
 		m_DG_OpRecord.ReBind();                        //实现与datagrid中的表格绑定 
@@ -921,7 +922,7 @@ void CBlastTestDlg::OnTimer(UINT nIDEvent)
 		m_DataGrid1.ReBind();                        //实现与datagrid中的表格绑定 
 		m_DataGrid1.Refresh(); 
 
-		KillTimer(2);
+		
 	}
 	if(3==nIDEvent)////用于液压加压
 	{
