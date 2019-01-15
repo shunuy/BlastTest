@@ -122,7 +122,7 @@ BOOL CTestRecordView::OnInitDialog()
 	if(m_Type==_T("特性落高法"))
 		oleVar=_T("select 自动编号,药量,烟雾状态,声级计峰值,重锤高度,实验结果,实验日期 from TestData where 试样编号='")+m_SpNo+_T("'") +_T("order by 实验日期  desc");	
 	else 
-		oleVar=_T("select 自动编号,实验日期,药量,烟雾状态,声级计峰值,实验结果 from TestData where 试样编号='")+m_SpNo+_T("'") +_T("order by 实验日期  desc");	
+		oleVar=_T("select 自动编号,药量,实验结果,烟雾状态,声级计峰值,实验日期 from TestData where 试样编号='")+m_SpNo+_T("'") +_T("order by 实验日期  desc");	
 	//m_AdoRecord.SetRecordSource(_T(""));
 	RSet.Requery(adConnectUnspecified);
 	RSet.Close();
@@ -195,7 +195,7 @@ void CTestRecordView::DataRefresh(CString Str)
 	if(m_Type==_T("特性落高法"))
 		oleVar=_T("select 自动编号,药量,烟雾状态,声级计峰值,重锤高度,实验结果,实验日期 from TestData where 试样编号='")+m_SpNo+_T("'") +_T("order by 实验日期  desc");	
 	else 
-		oleVar=_T("select 自动编号,实验日期,药量,烟雾状态,声级计峰值,实验结果 from TestData where 试样编号='")+m_SpNo+_T("'") +_T("order by 实验日期  desc");
+		oleVar=_T("select 自动编号,药量,实验结果,烟雾状态,声级计峰值,实验日期 from TestData where 试样编号='")+m_SpNo+_T("'") +_T("order by 实验日期  desc");
 	RSet.Close();
 	RSet.Open(oleVar,COleVariant(strConnect),lCursorType, lLockType, adConnectUnspecified );
 	RSet.Requery(adConnectUnspecified );
