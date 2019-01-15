@@ -9,6 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "下位机", "下位机", "{
 	ProjectSection(SolutionItems) = preProject
 		下位机\170726摩擦（变频器）_V1.09_余卓终稿.pdw = 下位机\170726摩擦（变频器）_V1.09_余卓终稿.pdw
 		下位机\20161010摩擦（变频器）_V1.08_黄起勇终稿.pdw = 下位机\20161010摩擦（变频器）_V1.08_黄起勇终稿.pdw
+		下位机\修改记录.txt = 下位机\修改记录.txt
+		下位机\摩擦V1.02.01.pdw = 下位机\摩擦V1.02.01.pdw
+		下位机\摩擦V1.02.pdw = 下位机\摩擦V1.02.pdw
 		下位机\版本管理.vsdx = 下位机\版本管理.vsdx
 	EndProjectSection
 EndProject

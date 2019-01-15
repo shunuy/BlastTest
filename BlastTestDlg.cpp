@@ -2041,7 +2041,7 @@ void CBlastTestDlg::WriteRecord()
 	CString StrAutoNo;
 	char Buf[20];
 	memset(Buf,0x00,20);
-	sprintf(Buf,_T("A%2d%2d"),m_TestGroupNo,m_TestNo);
+	sprintf(Buf, _T("A%2d%2d"), m_MaxGroupNo-m_TestGroupNo+1, m_MaxTestNo - m_TestNo+1);
 	StrAutoNo=Buf;
 	StrAutoNo.Replace(' ','0');
 	StrAutoNo+=m_TestSpNo;
@@ -2822,7 +2822,7 @@ void CBlastTestDlg::AddRecord(bool result)
 	CString StrAutoNo;
 	char Buf[20];
 	memset(Buf, 0x00, 20);
-	sprintf(Buf, _T("A%2d%2d"), m_TestGroupNo, m_TestNo);
+	sprintf(Buf, _T("A%2d%2d"), m_MaxGroupNo-m_TestGroupNo+1, m_MaxTestNo - m_TestNo+1);
 	StrAutoNo = Buf;
 	StrAutoNo.Replace(' ', '0');
 	StrAutoNo += m_TestSpNo;
