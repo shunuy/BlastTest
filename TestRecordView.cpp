@@ -362,7 +362,7 @@ void CTestRecordView::OnPrintreport()
 		str = buf;
 		str += m_SpNo;
 		str.Replace(' ', '0');
-		str = "select  * from TestData where  自动编号 like'" + str + "' order by 实验日期 DESC";
+		str = "select  * from TestData where  自动编号 like'" + str + "' order by 实验日期 ASC";
 		DataSet.Open(_T(str));
 	
 		index[0] = i;
